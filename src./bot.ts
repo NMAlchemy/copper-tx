@@ -1,7 +1,7 @@
 import { Telegraf, Markup } from 'telegraf';
 import { PrismaClient } from '@prisma/client';
 import { Connection, Keypair } from '@solana/web3.js';
-import { setupPusherForUser } from './utils/pusher';
+import { initializePusher, setupPusherForUser } from './utils/pusher';
 import { encrypt, decrypt } from './utils/security';
 import * as authCommands from './commands/auth';
 import * as walletCommands from './commands/wallet';
@@ -12,6 +12,9 @@ const bot = new Telegraf(process.env.BOT_TOKEN!);
 const prisma = new PrismaClient();
 const connection = new Connection(process.env.SOLANA_RPC_URL!, 'confirmed');
 const botKeypair = Keypair.fromSecretKey(Buffer.from(process.env.BOT_PRIVATE_KEY!, 'base58'));
+
+// Initialize Pusher with bot instance
+initializePusher(bot);
 
 // Middleware for session management
 bot.use(async (ctx, next) => {
