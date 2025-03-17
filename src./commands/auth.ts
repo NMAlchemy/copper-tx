@@ -14,7 +14,7 @@ export async function handleLogin(ctx: Context) {
 
 export async function handleOtp(ctx: Context) {
   const otp = ctx.message?.text.split(' ')[1];
-  if (!otp || !ctx.session!.email) return ctx.reply('Please provide an OTP after /login.');
+  if (!otp || !ctx.session!.email) return ctx.reply('Please provide an OTP after /login (e.g., /otp 123456).');
   try {
     const response = await axios.post(`${API_BASE_URL}/api/auth/email-otp/authenticate`, {
       email: ctx.session!.email,
@@ -33,10 +33,11 @@ export async function handleOtp(ctx: Context) {
     });
 
     await setupPusherForUser(ctx.session!.telegramId!, organizationId, token);
-    ctx.reply('Logged in successfully! Deposit notifications enabled.');
+    ctx.reply('🎉 Logged in successfully! Real-time deposit notifications are now enabled.');
     delete ctx.session!.email;
+    delete ctx.session!.waitingForEmail;
   } catch (error) {
-    ctx.reply('Invalid OTP or login failed. Try again.');
+    ctx.reply('❌ Invalid OTP or login failed. Please try again.');
   }
 }
 
@@ -48,7 +49,7 @@ export async function handleProfile(ctx: Context) {
       headers: { Authorization: `Bearer ${token}` },
     });
     const profile = response.data;
-    ctx.reply(`Profile:\nEmail: ${profile.email}\nID: ${profile.id}`);
+    ctx.reply(`👤 *Profile*\n\nEmail: ${profile.email}\nID: ${profile.id}`, { parse_mode: 'Markdown' });
   } catch (error) {
     ctx.reply('Failed to fetch profile. Try again later.');
   }
@@ -63,9 +64,11 @@ export async function handleKyc(ctx: Context) {
     });
     const status = response.data.status;
     if (status === 'approved') {
-      ctx.reply('Your KYC/KYB is approved.');
+      ctx.reply('✅ Your KYC/KYB is approved.');
     } else {
-      ctx.reply('Your KYC/KYB is not approved. Complete it at: https://platform.copperx.io/kyc');
+      ctx.reply('⚠️ Your KYC/KYB is not approved. Complete it at: [Copperx Platform](https://platform.copperx.io/kyc)', {
+        parse_mode: 'Markdown',
+      });
     }
   } catch (error) {
     ctx.reply('Failed to check KYC status.');
