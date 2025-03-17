@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  telegramId    String   @id
+  sessionToken  String?  @db.Text
+  organizationId String? @db.VarChar(44)
+  addresses     Address[]
+  balances      Balance[]
+  transactions  Transaction[]
+}
+
+model Address {
+  id        String   @id @default(uuid())
+  userId    String
+  address   String   @db.VarChar(44) // Solana base58
+  user      User     @relation(fields: [userId], references: [telegramId])
+}
+
+model Balance {
+  userId    String   @id
+  balance   Float    @default(0)
+  user      User     @relation(fields: [userId], references: [telegramId])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  type        String
+  amount      Float
+  currency    String   @default("USDC")
+  status      String   @default("completed")
+  txHash      String?  @db.VarChar(88)
+  userId      String
+  user        User     @relation(fields: [userId], references: [telegramId])
+}
