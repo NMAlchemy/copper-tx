@@ -1,0 +1,57 @@
+{
+  "name": "copperx-telegram-bot",
+  "version": "1.0.0",
+  "description": "A sophisticated Telegram bot for Copperx stablecoin banking on Solana",
+  "main": "dist/bot.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "dev": "ts-node src/bot.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:studio": "prisma studio",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "test": "echo \"No tests specified yet\" && exit 0"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "solana",
+    "copperx",
+    "stablecoin",
+    "pusher",
+    "prisma"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "@solana/spl-token": "^0.4.8",
+    "@solana/web3.js": "^1.95.2",
+    "axios": "^1.6.8",
+    "bs58": "^5.0.0",
+    "crypto": "^1.0.1",
+    "express": "^4.19.2",
+    "pusher-js": "^8.4.0-rc2",
+    "telegraf": "^4.16.3",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/bs58": "^4.0.4",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.30",
+    "@types/tweetnacl": "^1.0.9",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "prisma": "^5.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
