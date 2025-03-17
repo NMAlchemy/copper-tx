@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",                    // Compile to ES2018 (Node.js 10+ compatible)
+    "module": "commonjs",                  // Use CommonJS module system for Node.js
+    "outDir": "./dist",                    // Output compiled JS to dist/ directory
+    "rootDir": "./src",                    // Source files are in src/ directory
+    "strict": true,                        // Enable strict type-checking
+    "esModuleInterop": true,               // Enable interop between CommonJS and ES modules
+    "skipLibCheck": true,                  // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Enforce consistent file name casing
+    "resolveJsonModule": true,             // Allow importing JSON files
+    "moduleResolution": "node",            // Use Node.js-style module resolution
+    "noImplicitAny": true,                 // Disallow implicit 'any' types
+    "sourceMap": true                      // Generate source maps for debugging
+  },
+  "include": [
+    "src/**/*"                            // Include all TypeScript files in src/
+  ],
+  "exclude": [
+    "node_modules",                       // Exclude dependencies
+    "dist"                                // Exclude compiled output
+  ]
+}
